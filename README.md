@@ -5,6 +5,7 @@ A team of AI agents resolves bill disputes for NovaCell (a made-up mobile operat
 > **All data is synthetic** (seed 11): 388 accounts, 138 dispute tickets with October bills, network logs, international call records, premium-SMS opt-ins and payments. Prices match the NovaCell catalogue used in the earlier projects.
 
 - **Live app:** https://novacell-dispute-desk.vercel.app (no sign-in)
+- **AI opportunity map (Miro):** https://miro.com/app/board/uXjVEQanZeQ=/
 
 ## The team
 
