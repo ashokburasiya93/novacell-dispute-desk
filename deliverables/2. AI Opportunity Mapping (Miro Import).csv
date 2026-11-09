@@ -1,0 +1,61 @@
+﻿Frame,Type,Title,Text,Color,Impact,Feasibility,Score,Quadrant
+1 Header,Sticky,Persona,"Rohan, Billing Disputes Team Lead (synthetic). 30-40 disputes a day across five systems; approves credits over $50.",yellow,,,,
+1 Header,Sticky,Root cause,"Evidence gathered by hand from five systems and a PDF policy applied from memory: slow, inconsistent, open to pressure.",yellow,,,,
+1 Header,Sticky,Evidence,Synthetic: 138 disputes; 41% vague; 21% with pressure or hidden instructions; 21% need a credit over $50.,yellow,,,,
+1 Header,Sticky,Goal,"Find where agents help (reading, investigating, writing) and where code and people must stay in charge (money, approvals).",yellow,,,,
+2 Workflow,Sticky,S1 Complaint arrives | Today,"Chat, email or call; often vague.",gray,,,,
+2 Workflow,Sticky,S1 Complaint arrives | Pain,Which charge? Unclear; bounces between teams.,red,,,,
+2 Workflow,Sticky,S1 Complaint arrives | AI opportunities,O1,light_green,,,,
+2 Workflow,Sticky,S2 Gather evidence | Today,"Agent opens bill, network log, calls, SMS opt-ins, payments.",gray,,,,
+2 Workflow,Sticky,S2 Gather evidence | Pain,Five screens; most of the handle time.,red,,,,
+2 Workflow,Sticky,S2 Gather evidence | AI opportunities,O2,light_green,,,,
+2 Workflow,Sticky,S3 Decide the credit | Today,Policy PDF applied from memory.,gray,,,,
+2 Workflow,Sticky,S3 Decide the credit | Pain,"Same case, different credits; pressure works.",red,,,,
+2 Workflow,Sticky,S3 Decide the credit | AI opportunities,"O3, O6",light_green,,,,
+2 Workflow,Sticky,S4 Reply | Today,Agent writes a reply.,gray,,,,
+2 Workflow,Sticky,S4 Reply | Pain,Doesn't explain; customer re-opens.,red,,,,
+2 Workflow,Sticky,S4 Reply | AI opportunities,"O4, O5",light_green,,,,
+2 Workflow,Sticky,S5 Approve big credits | Today,Weekly supervisor batch.,gray,,,,
+2 Workflow,Sticky,S5 Approve big credits | Pain,Customers wait a week.,red,,,,
+2 Workflow,Sticky,S5 Approve big credits | AI opportunities,O7,light_green,,,,
+3 Opportunities,Card,O1 Intake agent,"Classify the complaint, mark it unclear, flag hidden instructions. Why AI: free text. Evidence: 41% vague Stage: S1",blue,4,5,20,Do first (MVP)
+3 Opportunities,Card,O2 Investigator agent with read-only tools,"Call the five record tools and summarise evidence; for vague complaints, find the unsupported charge. Why AI: multi-step lookup and reasoning. Evidence: five screens per case Stage: S2",blue,5,4,20,Do first (MVP)
+3 Opportunities,Card,O3 Policy engine in code,Apply R1-R9 to the records. Why AI: Not AI on purpose; money must be exact and auditable. Evidence: inconsistent credits Stage: S3,blue,5,5,25,Do first (MVP)
+3 Opportunities,Card,O4 Writer agent,Draft the reply from decision and evidence. Why AI: language task. Evidence: re-opened disputes Stage: S4,blue,4,5,20,Do first (MVP)
+3 Opportunities,Card,O5 Checker in code,Every amount from the decision or bill; approval and handoff wording; template fallback. Why AI: guard on O4. Evidence: promises in replies Stage: S4,blue,5,5,25,Do first (MVP)
+3 Opportunities,Card,O6 Injection and pressure defence,Flag and ignore instructions in complaints; credits only from policy. Why AI: needed because O1-O4 read customer text. Evidence: 21% contain instructions Stage: S3,blue,5,4,20,Do first (MVP)
+3 Opportunities,Card,O7 Same-day supervisor approval,"Queue credits over $50 with evidence for one-click approval. Why AI: workflow, not AI. Evidence: weekly batch Stage: S5",blue,4,4,16,Do first (MVP)
+3 Opportunities,Card,O8 Single all-in-one agent,"One LLM investigates, decides and writes. Why AI: simpler, fewer calls; but money decided by a model. Evidence: compared in evals Stage: S2-S4",blue,3,4,12,Quick add-on
+3 Opportunities,Card,O9 Auto-apply all credits,No human in the loop. Why AI: fast; unacceptable risk on large credits. Evidence: finance controls Stage: S5,blue,2,3,6,Park / avoid
+3 Opportunities,Card,O10 Voice-call dispute agent,Handle disputes on 611 calls. Why AI: later; reuse Voice Assist. Evidence: post-pilot Stage: S1,blue,3,2,6,Park / avoid
+4 Scoring,Sticky,Scoring rubric,Impact (1-5): handle time + credit accuracy + customer trust. Feasibility (1-5): data access + technique maturity + cost of being wrong + effort. Do first = Impact >= 4 and Feasibility >= 4.,yellow,,,,
+5 Impact x Feasibility 2x2,Sticky,O3 Policy engine in code,I5 x F5 = 25,green,5,5,25,Do first (MVP)
+5 Impact x Feasibility 2x2,Sticky,O5 Checker in code,I5 x F5 = 25,green,5,5,25,Do first (MVP)
+5 Impact x Feasibility 2x2,Sticky,O1 Intake agent,I4 x F5 = 20,green,4,5,20,Do first (MVP)
+5 Impact x Feasibility 2x2,Sticky,O2 Investigator agent with read-only tools,I5 x F4 = 20,green,5,4,20,Do first (MVP)
+5 Impact x Feasibility 2x2,Sticky,O4 Writer agent,I4 x F5 = 20,green,4,5,20,Do first (MVP)
+5 Impact x Feasibility 2x2,Sticky,O6 Injection and pressure defence,I5 x F4 = 20,green,5,4,20,Do first (MVP)
+5 Impact x Feasibility 2x2,Sticky,O7 Same-day supervisor approval,I4 x F4 = 16,green,4,4,16,Do first (MVP)
+5 Impact x Feasibility 2x2,Sticky,O8 Single all-in-one agent,I3 x F4 = 12,light_blue,3,4,12,Quick add-on
+5 Impact x Feasibility 2x2,Sticky,O9 Auto-apply all credits,I2 x F3 = 6,gray,2,3,6,Park / avoid
+5 Impact x Feasibility 2x2,Sticky,O10 Voice-call dispute agent,I3 x F2 = 6,gray,3,2,6,Park / avoid
+6 Should / Should NOT,Sticky,Should do,Gather evidence from every record system automatically.,green,,,,
+6 Should / Should NOT,Sticky,Should do,"Decide every credit by the written policy, in code.",green,,,,
+6 Should / Should NOT,Sticky,Should do,Explain the decision with the evidence.,green,,,,
+6 Should / Should NOT,Sticky,Should do,Send credits over $50 to a supervisor.,green,,,,
+6 Should / Should NOT,Sticky,Should do,Measure the team against one agent and against rules.,green,,,,
+6 Should / Should NOT,Sticky,Should NOT do,Let a language model decide money.,red,,,,
+6 Should / Should NOT,Sticky,Should NOT do,Read any customer other than the one on the ticket.,red,,,,
+6 Should / Should NOT,Sticky,Should NOT do,Follow instructions inside a complaint.,red,,,,
+6 Should / Should NOT,Sticky,Should NOT do,Apply large credits without a person.,red,,,,
+6 Should / Should NOT,Sticky,Should NOT do,"Change accounts (cancel, port, transfer).",red,,,,
+7 Feature to AI to Guardrails,Table row,F1 Intake + Investigator,"From: O1, O2, O6 | AI capability: LLM classification + tool-calling agent (gpt-oss-120b) | Guardrails: tools read only the ticket's customer; instructions flagged and ignored | Test: decision accuracy on vague vs clear tickets",violet,,,,
+7 Feature to AI to Guardrails,Table row,F2 Policy + Checker,"From: O3, O5 | AI capability: none (code) | Guardrails: R1-R9 only; every amount verified; template fallback | Test: policy = ground truth 138/138; 7/7 broken replies caught",violet,,,,
+7 Feature to AI to Guardrails,Table row,F3 Writer + Supervisor,"From: O4, O7 | AI capability: grounded generation + human approval | Guardrails: approval wording for credits > $50; handoff for account changes | Test: safe replies 100%",violet,,,,
+7 Feature to AI to Guardrails,Table row,Compared,"From: O8 | Single agent with the same tools and the policy text | Test: same 36 tickets; over-credit, accuracy, tokens, latency",violet,,,,
+8 Guardrails & risks,Sticky,Model decides money,Policy in code; single-agent arm measures the risk.,orange,,,,
+8 Guardrails & risks,Sticky,Prompt injection,Flag + ignore; credits only from policy; safety set includes every injected ticket.,orange,,,,
+8 Guardrails & risks,Sticky,Wrong customer data,Tools locked to the ticket's customer.,orange,,,,
+8 Guardrails & risks,Sticky,Large credits,Supervisor approval above $50.,orange,,,,
+8 Guardrails & risks,Sticky,Cost and latency of many agents,Measured per ticket; team must earn its extra calls.,orange,,,,
+9 Hand-off,Sticky,To the PRD,Build F1-F3; compare with one agent and rules; plan O10; park O9.,yellow,,,,
