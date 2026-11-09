@@ -1,0 +1,9 @@
+{
+  "name": "novacell-dispute-desk",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "NovaCell Dispute Desk: a team of AI agents resolves bill disputes; credits decided by code; compared with a single agent and rules only",
+  "engines": { "node": ">=20" },
+  "scripts": { "data": "python3 ml/generate_data.py", "test": "node scripts/test_checks.js", "rules": "node scripts/rules_baseline.mjs", "dev": "node scripts/dev_server.js" }
+}
