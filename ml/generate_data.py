@@ -137,40 +137,55 @@ def policy(a, bill, rec, kind):
         return {"outcome": "handoff", "credit": 0.0, "goodwill": 0.0, "lines": [], "reason": "Account change (cancel, port, transfer) needs a verified agent."}
     abroad = {r["date"] for r in rec["network_days"] if r["country"] != "Home network"}
     credit, lines, reason = 0.0, [], ""
+    why = {}
     rom = [i for i in bill if i["type"] == "roaming"]
     if rom:
         wrong = [i for i in rom if i["date"] not in abroad]
         credit = sum(i["amount"] for i in wrong); lines = [i["line_id"] for i in wrong]
         reason = f"{len(wrong)} roaming day(s) charged while the phone was on the home network." if wrong else "Network log shows the phone abroad on every charged day."
+        why["roaming"] = reason
     dp = [i for i in bill if i["type"] == "roaming_daypass"]
     if dp:
         over = dp[10:]
         credit = sum(i["amount"] for i in over); lines = [i["line_id"] for i in over]
         reason = f"Day Pass is capped at 10 charged days per cycle; {len(over)} day(s) charged above the cap."
+        why["daypass"] = reason
     sms = [i for i in bill if i["type"] == "premium_sms"]
     if sms:
         optin = rec["sms_subscriptions"][0]["opt_in"]
         if optin is None:
             credit = sum(i["amount"] for i in sms); lines = [i["line_id"] for i in sms]
             reason = "No opt-in record for the premium SMS service: refund all charges and block premium SMS."
+            why["sms"] = reason
         else:
             reason = f"Opt-in recorded on {optin['date']} ({optin['method']}): charges are valid; explain how to cancel."
+            why["sms"] = reason
     if kind == "duplicate_payment":
         p = rec["payments"]
         credit = p[1]["amount"]; lines = []
         reason = "Two identical card payments on the same day: refund the duplicate payment."
+        why["dup"] = reason
     lf = [i for i in bill if i["type"] == "late_fee"]
     if lf:
         if a["late_fees_12m"] == 0 and any("failed" in p.get("status", "") for p in rec["payments"]):
             credit = 10.0; lines = [lf[0]["line_id"]]
             reason = "First late fee in 12 months and the autopay failed: waive the late fee once."
+            why["late"] = reason
         else:
             reason = "A late fee was already waived or charged in the last 12 months: the fee stands."
+            why["late"] = reason
     ic = [i for i in bill if i["type"] == "intl_calls"]
     if ic:
         reason = "Call records match the charged minutes: charges are valid."
+        why["intl"] = reason
     if kind == "fee_question":
         reason = "The regulatory recovery fee is a standard charge on every line: explain it."
+        why["fee"] = reason
+    # the scenario's own charge explains the outcome; distractor charges must not overwrite it
+    prefix = {"roaming": "roaming", "daypass": "daypass", "sms": "sms", "duplicate": "dup", "late": "late", "intl": "intl", "fee": "fee"}
+    for k, v in prefix.items():
+        if kind.startswith(k) and v in why:
+            reason = why[v]
     # goodwill: valid charge, loyal customer, no goodwill in the last 12 months
     goodwill = 0.0
     if credit == 0 and kind in ("roaming_legit", "intl_calls_legit", "intl_calls_goodwill", "sms_optin") and a["tenure_months"] >= 24 and a["goodwill_credits_12m"] == 0:

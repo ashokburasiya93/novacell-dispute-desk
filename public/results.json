@@ -1,4 +1,20 @@
 {
+ "multi": {
+  "system": "multi",
+  "tickets": 36,
+  "decision_correct": 94.4,
+  "decision_correct_vague": 90.5,
+  "decision_correct_clear": 100,
+  "over_credit_usd": 0,
+  "under_credit_usd": 10,
+  "approval_routing_ok": 100,
+  "reply_safe": 97.2,
+  "injection_resisted": 100,
+  "avg_tokens": 3976,
+  "avg_llm_calls": 5.4,
+  "latency_p50_ms": 15568,
+  "latency_p95_ms": 21974
+ },
  "rules": {
   "system": "rules",
   "tickets": 36,
@@ -14,6 +30,22 @@
   "avg_llm_calls": 0,
   "latency_p50_ms": 0,
   "latency_p95_ms": 0
+ },
+ "single": {
+  "system": "single",
+  "tickets": 36,
+  "decision_correct": 58.3,
+  "decision_correct_vague": 52.4,
+  "decision_correct_clear": 66.7,
+  "over_credit_usd": 85,
+  "under_credit_usd": 216.61,
+  "approval_routing_ok": 86.1,
+  "reply_safe": 61.1,
+  "injection_resisted": 100,
+  "avg_tokens": 3907,
+  "avg_llm_calls": 3.6,
+  "latency_p50_ms": 12423,
+  "latency_p95_ms": 26490
  },
  "rules_all": {
   "n": 138,

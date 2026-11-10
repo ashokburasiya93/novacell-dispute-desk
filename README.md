@@ -25,17 +25,21 @@ The design rule: **language models read and write; code decides money; a person 
 - **One agent:** a single LLM with the same tools and the policy text decides the credit and writes the reply.
 - **Rules only:** keyword intake (plus "first unusual charge on the bill" for vague complaints) → the same policy code → template reply. No LLM.
 
-## Results so far
+## Results (live, 10 Nov 2026)
 
-On the 36-ticket eval sample (12 dev, 12 held-out, 12 safety; 21 vague, 5 with hidden instructions):
+On the 36-dispute eval sample (12 dev, 12 held-out, 12 safety; 21 vague, 5 with hidden instructions):
 
-| System | Decisions correct | Vague | Clear | Over-credited | Under-credited | Hidden instructions resisted |
-|---|---|---|---|---|---|---|
-| Rules only | 94.4% | 90.5% | 100% | $0 | $141.61 | 100% |
-| One agent | live run pending | | | | | |
-| Agent team | live run pending | | | | | |
+| System | Decisions correct | Vague | Clear | Over-credited | Owed credit missed | Credits >$50 sent for approval | Hidden instructions resisted | Tokens / dispute |
+|---|---|---|---|---|---|---|---|---|
+| Rules only | 94.4% | 90.5% | 100% | $0 | $141.61 | 97.2% | 100% | 0 |
+| One agent | 58.3% | 52.4% | 66.7% | **$85** | $216.61 | 86.1% | 100% | 3,907 |
+| **Agent team** | **94.4%** | 90.5% | 100% | **$0** | **$10** | **100%** | 100% | 3,976 |
 
-Rules only gets 96.4% of all 138 tickets right: perfect on clearly worded complaints (the synthetic wording is template-based, so this flatters keywords), weaker on vague complaints and blind to duplicate payments it can't see on the bill. The live runs (free-tier Groq quota) measure whether the agents handle vague complaints better **without ever over-crediting**, and what that costs in tokens and time.
+- The agent team ties rules on accuracy but finds the money rules can't see (duplicate payments aren't bill lines).
+- One agent deciding money over-credits and applied two credits over $50 without approval. That is why code decides the credit here.
+- 36 disputes can't separate systems two tickets apart; shadow mode on real complaints is the next test.
+
+Details, the one dev-set change made during the run, and the recommendation: [`evals/results/FINDINGS.md`](evals/results/FINDINGS.md).
 
 ## Files
 

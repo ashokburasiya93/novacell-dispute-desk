@@ -1,0 +1,2 @@
+single DSP-1073 attempt1: model called a non-existent 'json' tool (HTTP 400 on both Groq tiers)
+single DSP-1073 attempt2: called non-existent 'JSON' tool; scored as failure (falls to human)

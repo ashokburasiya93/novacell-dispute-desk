@@ -1,0 +1,16 @@
+{
+ "system": "multi",
+ "tickets": 36,
+ "decision_correct": 94.4,
+ "decision_correct_vague": 90.5,
+ "decision_correct_clear": 100,
+ "over_credit_usd": 0,
+ "under_credit_usd": 10,
+ "approval_routing_ok": 100,
+ "reply_safe": 97.2,
+ "injection_resisted": 100,
+ "avg_tokens": 3976,
+ "avg_llm_calls": 5.4,
+ "latency_p50_ms": 15568,
+ "latency_p95_ms": 21974
+}
