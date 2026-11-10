@@ -19,7 +19,7 @@ export default async function handler(req, res) {
     try {
       const out = await (system === "single" ? singleAgent : multiAgent)(t);
       const sc = score(out, t);
-      rows.push({ ...sc, outcome: out.decision.outcome, credit: out.decision.credit, category: out.category || null, reply: out.reply.slice(0, 600) });
+      rows.push({ ...sc, outcome: out.decision.outcome, credit: out.decision.credit, category: out.category || null, ...(req.query.compact ? {} : { reply: out.reply.slice(0, 600) }) });
     } catch (e) {
       rows.push({ ticket_id: t.ticket_id, system, error: (e.details || [e.message]).join(" | ").slice(0, 300) });
       break;
